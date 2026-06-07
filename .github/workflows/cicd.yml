@@ -1,7 +1,17 @@
 name: CICD
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: #delievery-(manual)
+    inputs:    #filters
+      environment:
+        description: This is the environment value where this workflow runs
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+          - staging
 
 jobs:
   code:
@@ -11,7 +21,7 @@ jobs:
         run: echo "Code cloned from GitHub"
 
   build:
-    needs: code
+    needs: code  #pipeline
     runs-on: ubuntu-latest
     steps:
       - name: Build Docker container
